@@ -95,11 +95,12 @@ def main() -> int:
         fail(errors, "viewport meta がありません")
 
     for src, alt in parser.images:
-        if not src:
-            fail(errors, "src のない img 要素があります")
-            continue
         if alt is None or not alt.strip():
-            fail(errors, f"alt が空の画像があります: {src}")
+            fail(errors, f"alt が空の画像があります: {src or '(dynamic image)'}")
+        # Lightboxなど、JavaScriptで表示時にsrcを設定する画像はsrcなしを許可する。
+        # 静的にsrcを持つ画像については、参照先ファイルの存在まで検証する。
+        if not src:
+            continue
         parsed = urlparse(src)
         if not parsed.scheme and not src.startswith(("data:", "#")):
             target = ROOT / src.split("?", 1)[0].split("#", 1)[0]
