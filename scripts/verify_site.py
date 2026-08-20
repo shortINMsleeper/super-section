@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
 REQUIRED_ASSETS = [ROOT / "assets" / f"ashikaga-{i:02d}.jpg" for i in range(1, 5)]
+REQUIRED_ASSETS.append(ROOT / "assets" / "site.js")
 FORBIDDEN_PATTERNS = {
     "eval(": r"\beval\s*\(",
     "innerHTML": r"\.innerHTML\b",
@@ -16,27 +17,50 @@ FORBIDDEN_PATTERNS = {
     "javascript: URL": r"javascript\s*:",
 }
 FORBIDDEN_SECTION_LABELS = {"music", "pv", "video"}
+REQUIRED_CSP_DIRECTIVES = {
+    "default-src": "'none'",
+    "img-src": "'self'",
+    "script-src": "'self'",
+    "script-src-attr": "'none'",
+    "connect-src": "'none'",
+    "object-src": "'none'",
+    "frame-src": "'none'",
+    "base-uri": "'none'",
+    "form-action": "'none'",
+}
 
 
 class SiteParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.images: list[tuple[str | None, str | None]] = []
+        self.scripts: list[str | None] = []
         self.external_resources: list[str] = []
         self.section_labels: list[str] = []
         self._capture_heading: str | None = None
         self._heading_text: list[str] = []
         self.lang: str | None = None
         self.has_viewport = False
+        self.csp: str | None = None
+        self.referrer_policy: str | None = None
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         data = dict(attrs)
         if tag == "html":
             self.lang = data.get("lang")
-        if tag == "meta" and data.get("name", "").lower() == "viewport":
-            self.has_viewport = bool(data.get("content"))
+        if tag == "meta":
+            name = data.get("name", "").lower()
+            http_equiv = data.get("http-equiv", "").lower()
+            if name == "viewport":
+                self.has_viewport = bool(data.get("content"))
+            if name == "referrer":
+                self.referrer_policy = data.get("content")
+            if http_equiv == "content-security-policy":
+                self.csp = data.get("content")
         if tag == "img":
             self.images.append((data.get("src"), data.get("alt")))
+        if tag == "script":
+            self.scripts.append(data.get("src"))
         if tag in {"script", "link", "img", "source"}:
             key = "href" if tag == "link" else "src"
             ref = data.get(key)
@@ -63,6 +87,17 @@ def fail(errors: list[str], message: str) -> None:
     errors.append(message)
 
 
+def parse_csp(policy: str) -> dict[str, str]:
+    directives: dict[str, str] = {}
+    for item in policy.split(";"):
+        item = item.strip()
+        if not item:
+            continue
+        name, _, value = item.partition(" ")
+        directives[name.lower()] = value.strip()
+    return directives
+
+
 def main() -> int:
     errors: list[str] = []
 
@@ -72,9 +107,9 @@ def main() -> int:
 
     for asset in REQUIRED_ASSETS:
         if not asset.is_file():
-            fail(errors, f"必須画像がありません: {asset.relative_to(ROOT)}")
+            fail(errors, f"必須アセットがありません: {asset.relative_to(ROOT)}")
         elif asset.stat().st_size == 0:
-            fail(errors, f"画像が空です: {asset.relative_to(ROOT)}")
+            fail(errors, f"アセットが空です: {asset.relative_to(ROOT)}")
 
     text = INDEX.read_text(encoding="utf-8")
     lowered = text.lower()
@@ -93,12 +128,24 @@ def main() -> int:
         fail(errors, "<html lang=\"ja\"> が設定されていません")
     if not parser.has_viewport:
         fail(errors, "viewport meta がありません")
+    if parser.referrer_policy != "no-referrer":
+        fail(errors, "Referrer Policy が no-referrer ではありません")
+
+    if not parser.csp:
+        fail(errors, "Content-Security-Policy meta がありません")
+    else:
+        directives = parse_csp(parser.csp)
+        for name, expected in REQUIRED_CSP_DIRECTIVES.items():
+            if directives.get(name) != expected:
+                fail(errors, f"CSP directive が不足または不正です: {name} {expected}")
+        if "'unsafe-inline'" in directives.get("script-src", ""):
+            fail(errors, "CSP script-src に unsafe-inline を許可しないでください")
+        if "'unsafe-eval'" in directives.get("script-src", ""):
+            fail(errors, "CSP script-src に unsafe-eval を許可しないでください")
 
     for src, alt in parser.images:
         if alt is None or not alt.strip():
             fail(errors, f"alt が空の画像があります: {src or '(dynamic image)'}")
-        # Lightboxなど、JavaScriptで表示時にsrcを設定する画像はsrcなしを許可する。
-        # 静的にsrcを持つ画像については、参照先ファイルの存在まで検証する。
         if not src:
             continue
         parsed = urlparse(src)
@@ -106,6 +153,16 @@ def main() -> int:
             target = ROOT / src.split("?", 1)[0].split("#", 1)[0]
             if not target.is_file():
                 fail(errors, f"HTMLから参照された画像がありません: {src}")
+
+    for src in parser.scripts:
+        if not src:
+            fail(errors, "インライン script を検出しました。CSP維持のため外部同一オリジンファイルへ移してください")
+            continue
+        parsed = urlparse(src)
+        if not parsed.scheme and not src.startswith(("data:", "#")):
+            target = ROOT / src.split("?", 1)[0].split("#", 1)[0]
+            if not target.is_file():
+                fail(errors, f"HTMLから参照されたscriptがありません: {src}")
 
     if parser.external_resources:
         for ref in parser.external_resources:

@@ -2,11 +2,12 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'none'; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="no-referrer" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0a0908" />
   <meta name="description" content="アシカガの幻想的な宮殿ポートレートを収めたビジュアルギャラリー。" />
   <title>ASHIKAGA — Gilded Reverie</title>
-  <script>document.documentElement.classList.add('motion-ready');</script>
   <style>
     :root{
       --ink:#090807;--ink-2:#12100e;--ivory:#f5efe5;--muted:#b9ad9d;
@@ -28,19 +29,15 @@
     .concept{position:relative;border:1px solid var(--line);border-radius:32px;padding:clamp(32px,6vw,74px);overflow:hidden;background:linear-gradient(135deg,rgba(109,24,34,.14),rgba(201,167,106,.05))}.concept::before{content:"ASHIKAGA";position:absolute;right:-.04em;bottom:-.24em;font-size:clamp(90px,21vw,260px);line-height:1;color:rgba(255,255,255,.025);letter-spacing:-.06em}.concept blockquote{margin:0;max-width:830px;font-size:clamp(25px,4.4vw,52px);line-height:1.55;font-weight:400}.concept p{max-width:700px;color:var(--muted);margin:30px 0 0}
     footer{padding:52px 0 calc(70px + env(safe-area-inset-bottom));border-top:1px solid var(--line);color:#8f8579;font:500 10px/1.8 system-ui,sans-serif;letter-spacing:.14em}.footer-row{display:flex;justify-content:space-between;gap:24px;align-items:end}
     .lightbox{position:fixed;inset:0;z-index:50;background:rgba(4,3,3,.92);display:none;place-items:center;padding:calc(20px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) calc(18px + env(safe-area-inset-left));backdrop-filter:blur(12px);overscroll-behavior:contain}.lightbox.open{display:grid}.lightbox img{max-width:min(900px,94vw);max-height:calc(100dvh - 64px - env(safe-area-inset-top) - env(safe-area-inset-bottom));border-radius:18px;box-shadow:0 20px 100px #000}.lightbox button{position:absolute;right:calc(14px + env(safe-area-inset-right));top:calc(12px + env(safe-area-inset-top));width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(10,10,10,.58);color:white;font-size:24px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}.lightbox button:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
-    .motion-ready .hero-copy>.eyebrow,.motion-ready .hero-copy>h1,.motion-ready .hero-copy>.lead,.motion-ready .hero-copy>.hero-meta{opacity:0;transform:translateY(14px);animation:hero-intro .9s cubic-bezier(.2,.7,.2,1) forwards}.motion-ready .hero-copy>.eyebrow{animation-delay:.08s}.motion-ready .hero-copy>h1{animation-delay:.16s}.motion-ready .hero-copy>.lead{animation-delay:.28s}.motion-ready .hero-copy>.hero-meta{animation-delay:.4s}
-    .motion-ready .reveal{opacity:0;transform:translateY(20px);transition:opacity .78s cubic-bezier(.2,.7,.2,1),transform .78s cubic-bezier(.2,.7,.2,1)}.motion-ready .reveal.is-visible{opacity:1;transform:none}.motion-ready .gallery .shot.reveal:nth-child(1){transition-delay:.02s}.motion-ready .gallery .shot.reveal:nth-child(2){transition-delay:.08s}.motion-ready .gallery .shot.reveal:nth-child(3){transition-delay:.14s}.motion-ready .gallery .shot.reveal:nth-child(4){transition-delay:.2s}
-    @keyframes hero-intro{to{opacity:1;transform:none}}
     @media(max-width:760px){
       html{scroll-padding-top:76px}.shell{width:min(100% - 24px,1180px)}.site-header{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right));padding-bottom:8px}.brand{font-size:12px;letter-spacing:.13em}.nav{gap:2px}.nav a{font-size:9px;letter-spacing:.08em;padding:0 5px}
       .hero{padding:calc(104px + env(safe-area-inset-top)) 0 calc(34px + env(safe-area-inset-bottom));min-height:100svh}.hero-media img{object-position:54% 42%}.hero-media::after{background:linear-gradient(0deg,#090807 0%,rgba(6,5,4,.2) 60%),linear-gradient(90deg,rgba(5,4,3,.48),transparent)}.hero h1{font-size:clamp(46px,15vw,78px);line-height:.84;margin:14px 0 22px}.hero h1 span{font-size:.23em;letter-spacing:.27em;margin-top:.72em}.lead{font-size:14px;line-height:1.8}.hero-meta{margin-top:24px;gap:14px;letter-spacing:.12em}.hero-meta .line{width:44px}
       section{padding:72px 0;scroll-margin-top:76px}.section-head,.profile{grid-template-columns:1fr}.section-head{gap:16px;margin-bottom:28px}.section-head p{justify-self:start}.profile{gap:22px}.portrait{max-height:none;aspect-ratio:2/3}.profile-copy{padding:8px 0}.profile-name{font-size:clamp(38px,12vw,58px)}.facts{margin-top:26px}.fact{grid-template-columns:94px 1fr;gap:14px;padding:14px 0}
       .gallery{grid-template-columns:1fr;gap:16px}.shot,.shot:nth-child(n){grid-column:auto;min-height:0;aspect-ratio:2/3;border-radius:20px}.shot-label{left:18px;right:18px;bottom:16px}.shot-label b{font-size:18px}
       .concept{border-radius:24px;padding:30px 24px}.concept blockquote{font-size:clamp(24px,7.2vw,34px);line-height:1.5}.concept p{margin-top:22px}.footer-row{display:block}.footer-row div+div{margin-top:14px}
-      .motion-ready .reveal{transform:translateY(14px)}
     }
     @media(max-width:420px){.brand{font-size:11px}.nav a{font-size:8px;padding:0 4px}.hero h1{font-size:clamp(42px,14.5vw,62px)}.hero h1 span{letter-spacing:.22em}.eyebrow{font-size:10px;letter-spacing:.22em}.fact{grid-template-columns:82px 1fr;font-size:12px}.concept{padding:26px 20px}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.shot img{transition:none}.motion-ready .hero-copy>.eyebrow,.motion-ready .hero-copy>h1,.motion-ready .hero-copy>.lead,.motion-ready .hero-copy>.hero-meta,.motion-ready .reveal{opacity:1;transform:none;animation:none;transition:none}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.shot img{transition:none}}
   </style>
 </head>
 <body>
@@ -63,7 +60,7 @@
     </section>
 
     <section id="profile">
-      <div class="shell profile reveal" data-reveal>
+      <div class="shell profile">
         <figure class="portrait"><img src="assets/ashikaga-02.jpg" alt="アシカガのポートレート" loading="lazy" /></figure>
         <div class="profile-copy">
           <div class="eyebrow">Profile</div>
@@ -81,18 +78,18 @@
 
     <section id="gallery">
       <div class="shell">
-        <div class="section-head reveal" data-reveal><div><div class="eyebrow">Selected frames</div><h2>Gallery</h2></div><p>近景の手、流れる髪、円形の床模様。距離感を大きく歪ませ、画面の奥行きそのものをポーズの一部として扱った4カット。</p></div>
+        <div class="section-head"><div><div class="eyebrow">Selected frames</div><h2>Gallery</h2></div><p>近景の手、流れる髪、円形の床模様。距離感を大きく歪ませ、画面の奥行きそのものをポーズの一部として扱った4カット。</p></div>
         <div class="gallery" aria-label="アシカガ ギャラリー">
-          <figure class="shot reveal" data-reveal tabindex="0" data-full="assets/ashikaga-01.jpg"><img src="assets/ashikaga-01.jpg" alt="アシカガ ギャラリー1" loading="lazy" /><figcaption class="shot-label"><b>Golden Reach</b><span>FRAME 01</span></figcaption></figure>
-          <figure class="shot reveal" data-reveal tabindex="0" data-full="assets/ashikaga-02.jpg"><img src="assets/ashikaga-02.jpg" alt="アシカガ ギャラリー2" loading="lazy" /><figcaption class="shot-label"><b>Quiet Glance</b><span>FRAME 02</span></figcaption></figure>
-          <figure class="shot reveal" data-reveal tabindex="0" data-full="assets/ashikaga-03.jpg"><img src="assets/ashikaga-03.jpg" alt="アシカガ ギャラリー3" loading="lazy" /><figcaption class="shot-label"><b>Crimson Arc</b><span>FRAME 03</span></figcaption></figure>
-          <figure class="shot reveal" data-reveal tabindex="0" data-full="assets/ashikaga-04.jpg"><img src="assets/ashikaga-04.jpg" alt="アシカガ ギャラリー4" loading="lazy" /><figcaption class="shot-label"><b>Palace Orbit</b><span>FRAME 04</span></figcaption></figure>
+          <figure class="shot" tabindex="0" data-full="assets/ashikaga-01.jpg"><img src="assets/ashikaga-01.jpg" alt="アシカガ ギャラリー1" loading="lazy" /><figcaption class="shot-label"><b>Golden Reach</b><span>FRAME 01</span></figcaption></figure>
+          <figure class="shot" tabindex="0" data-full="assets/ashikaga-02.jpg"><img src="assets/ashikaga-02.jpg" alt="アシカガ ギャラリー2" loading="lazy" /><figcaption class="shot-label"><b>Quiet Glance</b><span>FRAME 02</span></figcaption></figure>
+          <figure class="shot" tabindex="0" data-full="assets/ashikaga-03.jpg"><img src="assets/ashikaga-03.jpg" alt="アシカガ ギャラリー3" loading="lazy" /><figcaption class="shot-label"><b>Crimson Arc</b><span>FRAME 03</span></figcaption></figure>
+          <figure class="shot" tabindex="0" data-full="assets/ashikaga-04.jpg"><img src="assets/ashikaga-04.jpg" alt="アシカガ ギャラリー4" loading="lazy" /><figcaption class="shot-label"><b>Palace Orbit</b><span>FRAME 04</span></figcaption></figure>
         </div>
       </div>
     </section>
 
     <section id="concept">
-      <div class="shell concept reveal" data-reveal>
+      <div class="shell concept">
         <div class="eyebrow">Concept</div>
         <blockquote>「宮殿の中心に立つ」のではなく、視線と動きで空間そのものを引き寄せる。</blockquote>
         <p>魚眼的な曲率と大胆な前景拡大を使いながら、表情はあくまで静かに。大きなジェスチャーと落ち着いた眼差しの対比を、アシカガのシリーズ全体を通した軸にしています。</p>
@@ -103,28 +100,6 @@
   <footer><div class="shell footer-row"><div>ASHIKAGA — GILDED REVERIE</div><div>VISUAL COLLECTION / STATIC EDITION</div></div></footer>
 
   <div class="lightbox" role="dialog" aria-modal="true" aria-label="画像拡大表示" aria-hidden="true"><button type="button" aria-label="閉じる">×</button><img alt="拡大画像" /></div>
-  <script>
-    const revealTargets=[...document.querySelectorAll('[data-reveal]')];
-    const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(reducedMotion||!('IntersectionObserver' in window)){
-      revealTargets.forEach(el=>el.classList.add('is-visible'));
-    }else{
-      const revealObserver=new IntersectionObserver(entries=>{
-        entries.forEach(entry=>{
-          if(!entry.isIntersecting)return;
-          entry.target.classList.add('is-visible');
-          revealObserver.unobserve(entry.target);
-        });
-      },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
-      revealTargets.forEach(el=>revealObserver.observe(el));
-    }
-
-    const box=document.querySelector('.lightbox'), big=box.querySelector('img'), close=box.querySelector('button');
-    let lastFocused=null;
-    const openBox=el=>{lastFocused=document.activeElement;big.src=el.dataset.full;box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.classList.add('lightbox-open');close.focus();};
-    document.querySelectorAll('.shot').forEach(el=>{el.addEventListener('click',()=>openBox(el));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openBox(el);}})});
-    const closeBox=()=>{box.classList.remove('open');box.setAttribute('aria-hidden','true');document.body.classList.remove('lightbox-open');big.removeAttribute('src');if(lastFocused&&typeof lastFocused.focus==='function')lastFocused.focus();lastFocused=null;};
-    close.addEventListener('click',closeBox);box.addEventListener('click',e=>{if(e.target===box)closeBox();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&box.classList.contains('open'))closeBox();});
-  </script>
+  <script src="assets/site.js" defer></script>
 </body>
 </html>
