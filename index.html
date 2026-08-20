@@ -2,6 +2,8 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self'; script-src 'self'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'none'; font-src 'self'; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; child-src 'none'; worker-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'" />
+  <meta name="referrer" content="no-referrer" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0a0908" />
   <meta name="description" content="アシカガの幻想的な宮殿ポートレートを収めたビジュアルギャラリー。" />
@@ -98,13 +100,6 @@
   <footer><div class="shell footer-row"><div>ASHIKAGA — GILDED REVERIE</div><div>VISUAL COLLECTION / STATIC EDITION</div></div></footer>
 
   <div class="lightbox" role="dialog" aria-modal="true" aria-label="画像拡大表示" aria-hidden="true"><button type="button" aria-label="閉じる">×</button><img alt="拡大画像" /></div>
-  <script>
-    const box=document.querySelector('.lightbox'), big=box.querySelector('img'), close=box.querySelector('button');
-    let lastFocused=null;
-    const openBox=el=>{lastFocused=document.activeElement;big.src=el.dataset.full;box.classList.add('open');box.setAttribute('aria-hidden','false');document.body.classList.add('lightbox-open');close.focus();};
-    document.querySelectorAll('.shot').forEach(el=>{el.addEventListener('click',()=>openBox(el));el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openBox(el);}})});
-    const closeBox=()=>{box.classList.remove('open');box.setAttribute('aria-hidden','true');document.body.classList.remove('lightbox-open');big.removeAttribute('src');if(lastFocused&&typeof lastFocused.focus==='function')lastFocused.focus();lastFocused=null;};
-    close.addEventListener('click',closeBox);box.addEventListener('click',e=>{if(e.target===box)closeBox();});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&box.classList.contains('open'))closeBox();});
-  </script>
+  <script src="assets/site.js" defer></script>
 </body>
 </html>
