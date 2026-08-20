@@ -44,10 +44,10 @@ jobs:
           mkdir -p _site/assets
           cp index.html _site/index.html
           cp assets/site.js _site/assets/
-          cp assets/ashikaga-01.jpg _site/assets/
-          cp assets/ashikaga-02.jpg _site/assets/
-          cp assets/ashikaga-03.jpg _site/assets/
-          cp assets/ashikaga-04.jpg _site/assets/
+          cp assets/ashikaga-01.avif _site/assets/
+          cp assets/ashikaga-02.avif _site/assets/
+          cp assets/ashikaga-03.avif _site/assets/
+          cp assets/ashikaga-04.avif _site/assets/
           touch _site/.nojekyll
 
       - name: Local E2E smoke test
