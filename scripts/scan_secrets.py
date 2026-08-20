@@ -101,7 +101,7 @@ def self_test() -> int:
         ("AWS access key", "AKIA" + "D" * 16),
         ("Google API key", "AIza" + "E" * 35),
         ("Bearer credential", "Authorization: Bearer " + "F" * 24),
-        ("Private key", "-----BEGIN PRIVATE KEY-----"),
+        ("Private key", "-----BEGIN " + "PRIVATE KEY-----"),
     ]
 
     errors: list[str] = []
