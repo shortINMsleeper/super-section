@@ -8,7 +8,7 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import urljoin
 from urllib.request import Request, urlopen
 
-IMAGE_ASSETS = [f"assets/ashikaga-{i:02d}.jpg" for i in range(1, 5)]
+IMAGE_ASSETS = [f"assets/ashikaga-{i:02d}.avif" for i in range(1, 5)]
 SCRIPT_ASSET = "assets/site.js"
 FORBIDDEN_SECTION_LABELS = {"music", "pv", "video"}
 
