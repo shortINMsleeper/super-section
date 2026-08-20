@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "index.html"
-REQUIRED_ASSETS = [ROOT / "assets" / f"ashikaga-{i:02d}.jpg" for i in range(1, 5)]
+REQUIRED_ASSETS = [ROOT / "assets" / f"ashikaga-{i:02d}.avif" for i in range(1, 5)]
 REQUIRED_ASSETS.append(ROOT / "assets" / "site.js")
 FORBIDDEN_PATTERNS = {
     "eval(": r"\beval\s*\(",
