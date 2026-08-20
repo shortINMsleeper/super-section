@@ -29,6 +29,12 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Test secret scanner
+        run: python scripts/scan_secrets.py --self-test
+
+      - name: Scan tracked files for secrets
+        run: python scripts/scan_secrets.py
+
       - name: Verify source site
         run: python scripts/verify_site.py
 
